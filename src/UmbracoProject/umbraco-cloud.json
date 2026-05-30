@@ -8,6 +8,12 @@
       "TrialExpireDate": "2026-06-13T06:39:57.0000000",
       "Workspaces": [
         {
+          "Id": "1ac1807a-c514-43fc-b35d-edcdea07cea6",
+          "Name": "Development",
+          "Type": "development",
+          "Url": "https://dev-nishas-romantic-kitten.euwest01.umbraco.io"
+        },
+        {
           "Id": "6882319f-2fe1-4205-a294-78e866e9a62b",
           "Name": "Live",
           "Type": "live",
