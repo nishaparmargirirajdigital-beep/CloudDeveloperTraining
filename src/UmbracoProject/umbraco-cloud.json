@@ -1,7 +1,18 @@
 {
   "Deploy": {
     "Project": {
-      "Workspaces": []
+      "Name": "nishas romantic kitten",
+      "Alias": "nishas-romantic-kitten",
+      "Id": "485166e2-7ddf-4226-99f1-e4078984948a",
+      "TrialExpireDate": "2026-06-13T06:39:57.0000000",
+      "Workspaces": [
+        {
+          "Id": "6882319f-2fe1-4205-a294-78e866e9a62b",
+          "Name": "Live",
+          "Type": "live",
+          "Url": "https://nishas-romantic-kitten.euwest01.umbraco.io"
+        }
+      ]
     },
     "Settings": {}
   },
