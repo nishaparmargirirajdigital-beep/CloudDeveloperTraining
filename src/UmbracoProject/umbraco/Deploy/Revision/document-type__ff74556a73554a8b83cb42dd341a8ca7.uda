@@ -40,6 +40,15 @@
           "ValueType": "Umbraco.Cms.Core.Strings.IHtmlEncodedString",
           "Name": "Body Text",
           "VariesByCulture": true
+        },
+        {
+          "Key": "f1ef83b6-81f6-44ca-a334-f7376cebc47f",
+          "Alias": "pickContent",
+          "DataType": "umb://data-type/fd1e0da556064862b6795d0cf3a52a59",
+          "ValueType": "Umbraco.Cms.Core.Models.PublishedContent.IPublishedContent",
+          "Name": "Pick Content,",
+          "SortOrder": 1,
+          "VariesByCulture": true
         }
       ]
     }
@@ -49,6 +58,10 @@
   "Dependencies": [
     {
       "Udi": "umb://data-type/ca90c9500aff4e72b976a30b1ac57dad",
+      "Ordering": true
+    },
+    {
+      "Udi": "umb://data-type/fd1e0da556064862b6795d0cf3a52a59",
       "Ordering": true
     },
     {
