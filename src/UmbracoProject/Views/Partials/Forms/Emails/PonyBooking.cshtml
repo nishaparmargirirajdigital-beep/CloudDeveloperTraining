@@ -1,0 +1,103 @@
+﻿@inherits Umbraco.Cms.Web.Common.Views.UmbracoViewPage<Umbraco.Forms.Core.Models.FormsHtmlModel>
+@using System.Globalization
+
+@{
+    string Read(string alias) => Model.GetValue(alias)?.ToString() ?? "";
+    string ReadMulti(string alias) => string.Join(", ", Model.GetValues(alias) ?? Enumerable.Empty<object>());
+
+    string ReadDate(string alias, string fmt = "dddd, dd MMMM yyyy")
+    {
+        var raw = Read(alias);
+        if (DateTime.TryParse(raw, out var dt)) return dt.Date.ToString(fmt, CultureInfo.CurrentCulture);
+        if (DateTimeOffset.TryParse(raw, out var dto)) return dto.Date.ToString(fmt, CultureInfo.CurrentCulture);
+        return raw;
+    }
+
+    var riderName = Read("riderName");
+    var email = Read("email");
+    var experience = Read("whatIsTheExperienceLevelOfTheRider");
+    var weight = Read("weightOfTheRider");
+    var rideDate = ReadDate("whichDateWouldYouLikeToRide");
+
+    var poniesList = new[]{
+    ReadMulti("preferredPonyB"),
+    ReadMulti("preferredPonyI"),
+    ReadMulti("preferredPonyA")
+  }.Where(s => !string.IsNullOrWhiteSpace(s));
+    var ponies = string.Join(", ", poniesList);
+
+    var comments = Read("comments");
+}
+
+<!doctype html>
+<html lang="en">
+<body style="margin:0; padding:24px; background:#f6f7fb; font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial; color:#111827;">
+    <div style="max-width:720px; margin:0 auto;">
+
+        <!-- Header (table for Outlook reliability) -->
+        <table role="presentation" cellpadding="0" cellspacing="0" width="100%" style="margin:0 0 16px;">
+            <tr>
+                <td style="width:32px;">
+                    <span style="display:inline-block; width:32px; height:32px; border-radius:50%; background:#1f6fff;"></span>
+                </td>
+                <td style="padding-left:12px; font-weight:700; font-size:14px; color:#374151;">Pony Booking Inc</td>
+            </tr>
+        </table>
+
+        <!-- Card -->
+        <div style="background:#ffffff; border-radius:16px; box-shadow:0 6px 20px rgba(17,24,39,.08); overflow:hidden;">
+            <div style="background:#1f6fff; height:4px;"></div>
+
+            <div style="padding:24px 24px 8px;">
+                <h2 style="margin:0 0 8px; font-size:20px; line-height:1.3;">Thank you for booking a pony with us</h2>
+                <p style="margin:0; color:#4b5563;">We received your request. Here are your booking details.</p>
+            </div>
+
+            <div style="padding:8px 24px 24px;">
+                <table role="presentation" cellpadding="0" cellspacing="0" style="width:100%; border-collapse:separate; border-spacing:0 8px;">
+                    <tr>
+                        <td style="width:220px; padding:12px 16px; background:#f9fafb; border:1px solid #e5e7eb; border-right:none; border-radius:10px 0 0 10px; font-weight:600; color:#374151;">Rider name</td>
+                        <td style="padding:12px 16px; background:#ffffff; border:1px solid #e5e7eb; border-radius:0 10px 10px 0;">@riderName</td>
+                    </tr>
+                    <tr>
+                        <td style="width:220px; padding:12px 16px; background:#f9fafb; border:1px solid #e5e7eb; border-right:none; border-radius:10px 0 0 10px; font-weight:600; color:#374151;">Email</td>
+                        <td style="padding:12px 16px; background:#ffffff; border:1px solid #e5e7eb; border-radius:0 10px 10px 0;">@email</td>
+                    </tr>
+                    <tr>
+                        <td style="width:220px; padding:12px 16px; background:#f9fafb; border:1px solid #e5e7eb; border-right:none; border-radius:10px 0 0 10px; font-weight:600; color:#374151;">Experience</td>
+                        <td style="padding:12px 16px; background:#ffffff; border:1px solid #e5e7eb; border-radius:0 10px 10px 0;">@experience</td>
+                    </tr>
+                    <tr>
+                        <td style="width:220px; padding:12px 16px; background:#f9fafb; border:1px solid #e5e7eb; border-right:none; border-radius:10px 0 0 10px; font-weight:600; color:#374151;">Rider weight</td>
+                        <td style="padding:12px 16px; background:#ffffff; border:1px solid #e5e7eb; border-radius:0 10px 10px 0;">@weight</td>
+                    </tr>
+                    <tr>
+                        <td style="width:220px; padding:12px 16px; background:#f9fafb; border:1px solid #e5e7eb; border-right:none; border-radius:10px 0 0 10px; font-weight:600; color:#374151;">Preferred ponies</td>
+                        <td style="padding:12px 16px; background:#ffffff; border:1px solid #e5e7eb; border-radius:0 10px 10px 0;">@ponies</td>
+                    </tr>
+                    <tr>
+                        <td style="width:220px; padding:12px 16px; background:#f9fafb; border:1px solid #e5e7eb; border-right:none; border-radius:10px 0 0 10px; font-weight:600; color:#374151;">Requested date</td>
+                        <td style="padding:12px 16px; background:#ffffff; border:1px solid #e5e7eb; border-radius:0 10px 10px 0;">@rideDate</td>
+                    </tr>
+                    @if (!string.IsNullOrWhiteSpace(comments))
+                    {
+                        <tr>
+                            <td style="width:220px; padding:12px 16px; background:#f9fafb; border:1px solid #e5e7eb; border-right:none; border-radius:10px 0 0 10px; font-weight:600; color:#374151;">Special requests</td>
+                            <td style="padding:12px 16px; background:#ffffff; border:1px solid #e5e7eb; border-radius:0 10px 10px 0;">@comments</td>
+                        </tr>
+                    }
+                </table>
+
+                <p style="margin:16px 0 0; font-size:12px; color:#6b7280;">
+                    This is a confirmation of the details you submitted. We will contact you if anything is missing.
+                </p>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <p style="text-align:center; margin:16px 0 0; font-size:12px; color:#9ca3af;">
+            &copy; @DateTime.UtcNow.Year Pony Booking Inc
+        </p>
+    </div>
+</body>
+</html>
